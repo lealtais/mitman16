@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { Book, GraduationCap, BarChart3, ExternalLink } from "lucide-react";
 
 const MapleLeafIcon = ({ className }: { className?: string }) => (
   <svg
@@ -24,8 +25,33 @@ const rankingData = [
   { rank: 10, name: "John Tavares", points: 422, years: "2018-2025", highlighted: false },
 ];
 
+const ecosystemLinks = [
+  {
+    icon: Book,
+    title: "The Blue & White History",
+    description: "Explore mais de 100 anos de história da franquia mais icônica do hóquei canadense.",
+    url: "https://www.nhl.com/mapleleafs/team/history",
+    color: "primary",
+  },
+  {
+    icon: GraduationCap,
+    title: "Hockey 101",
+    description: "Aprenda as regras, fundamentos e estratégias do esporte mais rápido do mundo.",
+    url: "https://www.nhl.com/fans/learn-to-play",
+    color: "accent",
+  },
+  {
+    icon: BarChart3,
+    title: "Game Analyzer",
+    description: "Análise tática com dados do NHL Edge — velocidade, distância e métricas de jogadas.",
+    url: "https://www.nhl.com/stats/",
+    color: "primary",
+  },
+];
+
 const StatsFooter = () => {
   const [hoveredRow, setHoveredRow] = useState<number | null>(null);
+  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
 
   const sortedData = [...rankingData].sort((a, b) => b.points - a.points);
 
@@ -139,6 +165,71 @@ const StatsFooter = () => {
           <p className="mt-4 text-center text-sm text-muted-foreground">
             * Estatísticas atualizadas até a temporada 2024-25
           </p>
+        </motion.div>
+
+        {/* Ecosystem Icons Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          viewport={{ once: true }}
+          className="mt-24 max-w-5xl mx-auto"
+        >
+          <div className="mb-12 text-center">
+            <span className="text-sm uppercase tracking-[0.3em] text-muted-foreground">Explore More</span>
+            <h3 className="font-display text-3xl md:text-4xl mt-2">
+              PAINEL DE <span className="text-gradient-blue">CONTROLE</span>
+            </h3>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {ecosystemLinks.map((link, index) => (
+              <motion.a
+                key={link.title}
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true }}
+                onMouseEnter={() => setHoveredCard(index)}
+                onMouseLeave={() => setHoveredCard(null)}
+                className={`group relative p-8 rounded-xl bg-card border border-border transition-all duration-500 ${
+                  hoveredCard === index 
+                    ? link.color === "accent" 
+                      ? "border-accent/50 glow-gold" 
+                      : "border-primary/50 glow-blue"
+                    : ""
+                }`}
+              >
+                {/* Icon */}
+                <div className={`mb-6 inline-flex p-4 rounded-xl transition-all duration-300 ${
+                  link.color === "accent" 
+                    ? "bg-accent/10 text-accent group-hover:bg-accent/20" 
+                    : "bg-primary/10 text-primary group-hover:bg-primary/20"
+                }`}>
+                  <link.icon className="h-8 w-8" />
+                </div>
+
+                {/* Content */}
+                <h4 className="font-display text-xl md:text-2xl mb-3 flex items-center gap-2">
+                  {link.title}
+                  <ExternalLink className={`h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity ${
+                    link.color === "accent" ? "text-accent" : "text-primary"
+                  }`} />
+                </h4>
+                <p className="text-muted-foreground text-sm leading-relaxed">
+                  {link.description}
+                </p>
+
+                {/* Hover effect line */}
+                <div className={`absolute bottom-0 left-0 h-1 rounded-b-xl transition-all duration-500 ${
+                  link.color === "accent" ? "bg-accent" : "bg-primary"
+                } ${hoveredCard === index ? "w-full" : "w-0"}`} />
+              </motion.a>
+            ))}
+          </div>
         </motion.div>
 
         {/* Footer bottom */}

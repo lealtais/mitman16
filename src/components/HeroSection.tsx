@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import marnerVegas from "@/assets/marner-vegas.jpg";
 import marnerLeafs from "@/assets/marner-leafs.jpg";
+import MetaballsCursor from "./MetaballsCursor";
 
 const HeroSection = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -30,32 +31,32 @@ const HeroSection = () => {
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
     >
-      {/* Vegas Image (Top layer - visible by default) */}
+      {/* Vegas Image (Bottom layer - always visible) */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: `url(${marnerVegas})` }}
       />
 
-      {/* Toronto Image (Bottom layer - revealed by flashlight) */}
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-300"
+      {/* Toronto Image (Top layer - revealed by metaballs mask) */}
+      <div 
+        id="toronto-reveal-layer"
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
           backgroundImage: `url(${marnerLeafs})`,
-          clipPath: isHovering
-            ? `circle(150px at ${mousePosition.x}px ${mousePosition.y}px)`
-            : `circle(0px at ${mousePosition.x}px ${mousePosition.y}px)`,
         }}
       />
 
-      {/* Flashlight glow effect */}
+      {/* Metaballs Canvas - creates the organic reveal effect */}
+      <MetaballsCursor containerRef={containerRef} isHovering={isHovering} />
+
+      {/* Blue glow effect around metaballs */}
       {isHovering && (
         <div
           className="pointer-events-none absolute inset-0"
           style={{
-            background: `radial-gradient(circle 180px at ${mousePosition.x}px ${mousePosition.y}px, 
-              transparent 0%, 
-              transparent 70%,
-              hsl(220 100% 45% / 0.2) 100%)`,
+            background: `radial-gradient(ellipse 300px 300px at ${mousePosition.x}px ${mousePosition.y}px, 
+              hsl(220 100% 45% / 0.15) 0%, 
+              transparent 70%)`,
           }}
         />
       )}
@@ -97,19 +98,21 @@ const HeroSection = () => {
           </motion.p>
         </motion.div>
 
-        {/* Custom cursor indicator */}
+        {/* Organic cursor hint */}
         {isHovering && (
-          <div
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.6 }}
             className="pointer-events-none fixed z-50 flex items-center justify-center"
             style={{
-              left: mousePosition.x - 75,
-              top: mousePosition.y - 75,
-              width: 150,
-              height: 150,
+              left: mousePosition.x - 10,
+              top: mousePosition.y - 10,
+              width: 20,
+              height: 20,
             }}
           >
-            <div className="h-full w-full rounded-full border-2 border-primary/50 animate-pulse-slow" />
-          </div>
+            <div className="h-2 w-2 rounded-full bg-primary/80" />
+          </motion.div>
         )}
 
         {/* Scroll indicator */}
