@@ -16,7 +16,7 @@ const TheDreamSection = () => {
     <section
       id="the-dream"
       ref={sectionRef}
-      className="relative min-h-screen py-32 section-gradient overflow-hidden"
+      className="relative min-h-screen py-32 bg-white overflow-hidden"
     >
       {/* Background decorative elements */}
       <div className="absolute inset-0 overflow-hidden">

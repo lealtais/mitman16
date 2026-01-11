@@ -1,8 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
-import marnerVegas from "@/assets/marner-vegas.jpg";
-import marnerLeafs from "@/assets/marner-leafs.jpg";
+import marnerVegas from "@/assets/marner-vegas.png";
+import marnerLeafs from "@/assets/marner-leafs.png";
 import MetaballsCursor from "./MetaballsCursor";
 
 const HeroSection = () => {

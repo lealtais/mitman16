@@ -70,8 +70,10 @@ const StatsFooter = () => {
           className="mb-20 text-center"
         >
           <div className="inline-block relative">
-            <MapleLeafIcon className="h-32 w-32 md:h-40 md:w-40 maple-leaf-icon animate-float" />
-            <div className="absolute inset-0 blur-3xl bg-primary/20" />
+            <div className="absolute inset-0 flex items-center justify-center -z-10">
+              <MapleLeafIcon className="h-48 w-48 md:h-56 md:w-56 text-primary/20 blur-3xl" />
+            </div>
+            <MapleLeafIcon className="h-32 w-32 md:h-40 md:w-40 maple-leaf-icon animate-float relative z-10" />
           </div>
           <h2 className="mt-8 font-display text-4xl md:text-6xl tracking-wide">
             TORONTO <span className="text-gradient-blue">MAPLE LEAFS</span>

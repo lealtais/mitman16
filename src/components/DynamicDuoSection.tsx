@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import duoImage from "@/assets/duo.webp";
 import { Zap, Target, Users } from "lucide-react";
 
 const DynamicDuoSection = () => {
@@ -15,8 +16,11 @@ const DynamicDuoSection = () => {
         <div
           className="h-full w-full"
           style={{
-            backgroundImage: `radial-gradient(circle at 2px 2px, hsl(var(--primary)) 1px, transparent 0)`,
-            backgroundSize: "40px 40px",
+            backgroundImage: `url(${duoImage})`,
+            backgroundSize: "cover",
+            backgroundRepeat: "no-repeat",
+            backgroundPosition: "center",
+            backgroundAttachment: "fixed",
           }}
         />
       </div>
